@@ -429,6 +429,7 @@ describe("cluster", function() {
       });
 
       it("get filtered", function(done) {
+        this.timeout(10000);
         const poolCluster = get3NodeCluster();
         const filteredCluster = poolCluster.of(/^node[12]/);
         const promises = [];
@@ -458,6 +459,7 @@ describe("cluster", function() {
       });
 
       it("query on filtered", function(done) {
+        this.timeout(10000);
         const poolCluster = get3NodeCluster();
         const filteredCluster = poolCluster.of(/^node[12]/);
 
@@ -489,6 +491,7 @@ describe("cluster", function() {
       });
 
       it("query on filtered ORDER", function(done) {
+        this.timeout(10000);
         const poolCluster = get3NodeCluster();
         const filteredCluster = poolCluster.of(/^node[12]/, "ORDER");
 
@@ -520,6 +523,7 @@ describe("cluster", function() {
       });
 
       it("batch on filtered", function(done) {
+        this.timeout(10000);
         const poolCluster = get3NodeCluster();
         const filteredCluster = poolCluster.of(/^node[12]/);
 
@@ -558,11 +562,12 @@ describe("cluster", function() {
       });
 
       it("batch error on filtered", function(done) {
+        this.timeout(10000);
         const poolCluster = get3NodeCluster();
         const filteredCluster = poolCluster.of(/^node[12]/);
 
         filteredCluster
-          .batch("INSERT INTO notExistingTable(val) values (?)", [[1], [2], [3]])
+          .batch("INSERT INTO notexistingtable(val) values (?)", [[1], [2], [3]])
           .then(res => {
             poolCluster.end();
             console.log(res);

@@ -34,16 +34,17 @@ env:
   - TEST_PORT=3305
   - TEST_HOST=mariadb.example.com
   - MUST_USE_TCPIP=1
+#  - RUN_LONG_TEST=1
 
 matrix:
-  allow_failures:
-    - node_js: "node"
-      env: DB=build
+#  allow_failures:
+#    - node_js: "node"
+#      env: DB=build
   include:
-    - node_js: "node"
-      env: DB=build
-    - node_js: "6"
-      env: DB=mariadb:10.3 SKIP_LEAK=1
+#    - node_js: "node"
+#      env: DB=build
+#    - node_js: "6"
+#      env: DB=mariadb:10.3 SKIP_LEAK=1
     - node_js: "8"
       env: DB=mariadb:10.3
     - node_js: "10"
@@ -54,26 +55,26 @@ matrix:
       env: DB=mariadb:10.3 TEST_LONG=1
     - node_js: "node"
       env: DB=mariadb:10.3 LINT=1
-    - node_js: "node"
-      env: DB=mariadb:10.3 BENCH=1
-    - node_js: "node"
-      env: DB=mariadb:10.3 MAXSCALE_VERSION=2.2.9 TEST_PORT=4007 TEST_USER=bob TEXT_DATABASE=test2
-    - node_js: "node"
-      env: DB=mariadb:5.5
-    - node_js: "node"
-      env: DB=mariadb:10.0
-    - node_js: "node"
-      env: DB=mariadb:10.1
-    - node_js: "node"
-      env: DB=mariadb:10.2
-    - node_js: "node"
-      env: DB=mysql:5.5
-    - node_js: "node"
-      env: DB=mysql:5.6
-    - node_js: "node"
-      env: DB=mysql:5.7
-    - node_js: "node"
-      env: DB=mysql:8.0
+#    - node_js: "node"
+#      env: DB=mariadb:10.3 BENCH=1
+#    - node_js: "node"
+#      env: DB=mariadb:10.3 MAXSCALE_VERSION=2.2.9 TEST_PORT=4007 TEST_USER=bob TEXT_DATABASE=test2
+#    - node_js: "node"
+#      env: DB=mariadb:5.5
+#    - node_js: "node"
+#      env: DB=mariadb:10.0
+#    - node_js: "node"
+#      env: DB=mariadb:10.1
+#    - node_js: "node"
+#      env: DB=mariadb:10.2
+#    - node_js: "node"
+#      env: DB=mysql:5.5
+#    - node_js: "node"
+#      env: DB=mysql:5.6
+#    - node_js: "node"
+#      env: DB=mysql:5.7
+#    - node_js: "node"
+#      env: DB=mysql:8.0
 
 cache:
   directories:
@@ -88,5 +89,4 @@ script:
   - .travis/script.sh
 
 after_success:
-  - if [ -z "$BENCH" ] ; then npm i nyc -g; fi
-  - if [ -z "$BENCH" ] ; then npm run coveralls; fi
+  - npm run report-coverage
