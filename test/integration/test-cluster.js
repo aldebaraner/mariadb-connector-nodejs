@@ -866,11 +866,12 @@ describe("cluster", function() {
                   expect(nodes["node1"]).to.equal(3);
                   expect(nodes["node2"]).to.equal(4);
                   expect(nodes["node3"]).to.equal(3);
-                  poolCluster.end();
-                  setTimeout(() => {
-                    proxy.close();
-                    done();
-                  }, 100);
+                  poolCluster.end(() => {
+                    setTimeout(() => {
+                      proxy.close();
+                      done();
+                    }, 100);
+                  });
                 });
               }, 550);
             });
