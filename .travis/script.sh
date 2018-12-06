@@ -12,6 +12,7 @@ if [ "$DB" = "build" ] ; then
   docker build -t build:latest --label build .travis/build/
 fi
 
+export ENTRYPOINT=$PROJ_PATH/.travis/entrypoint
 if [ -n "$MAXSCALE_VERSION" ] ; then
   ###################################################################################################################
   # launch Maxscale with one server
@@ -21,7 +22,6 @@ if [ -n "$MAXSCALE_VERSION" ] ; then
   docker-compose -f ${COMPOSE_FILE} build
   docker-compose -f ${COMPOSE_FILE} up -d
 else
-  export ENTRYPOINT=$PROJ_PATH/.travis/entrypoint
   docker-compose -f .travis/docker-compose.yml up -d
 fi
 
