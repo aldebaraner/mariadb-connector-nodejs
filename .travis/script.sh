@@ -41,7 +41,7 @@ if [ -z "$MAXSCALE_VERSION" ] ; then
 fi
 
 if [ -n "$LINT" ] ; then npm run test:lint; fi
-if [ -z "$BENCH$LINT" ] ; then npm run test:base; fi
+if [ -z "$BENCH$LINT" ] ; then npm run coverage:test; fi
 if [ -n "$BENCH" ] ; then
   npm install promise-mysql mysql2
   npm install microtime
