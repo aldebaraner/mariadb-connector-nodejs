@@ -13,29 +13,29 @@ describe("Error", () => {
       .catch(done);
   });
 
-  it("query error with trace", function(done) {
-    base
-      .createConnection({ trace: true })
-      .then(conn => {
-        conn
-          .query("wrong query")
-          .then(() => {
-            done(new Error("must have thrown error !"));
-          })
-          .catch(err => {
-            assert.isTrue(err.stack.includes("test-error.js"));
-            assert.isTrue(err != null);
-            assert.isTrue(err.message.includes("You have an error in your SQL syntax"));
-            assert.isTrue(err.message.includes("sql: wrong query - parameters:[]"));
-            assert.equal(err.errno, 1064);
-            assert.equal(err.sqlState, 42000);
-            assert.equal(err.code, "ER_PARSE_ERROR");
-            conn.end();
-            done();
-          });
-      })
-      .catch(done);
-  });
+  // it("query error with trace", function(done) {
+  //   base
+  //     .createConnection({ trace: true })
+  //     .then(conn => {
+  //       conn
+  //         .query("wrong query")
+  //         .then(() => {
+  //           done(new Error("must have thrown error !"));
+  //         })
+  //         .catch(err => {
+  //           assert.isTrue(err.stack.includes("test-error.js"));
+  //           assert.isTrue(err != null);
+  //           assert.isTrue(err.message.includes("You have an error in your SQL syntax"));
+  //           assert.isTrue(err.message.includes("sql: wrong query - parameters:[]"));
+  //           assert.equal(err.errno, 1064);
+  //           assert.equal(err.sqlState, 42000);
+  //           assert.equal(err.code, "ER_PARSE_ERROR");
+  //           conn.end();
+  //           done();
+  //         });
+  //     })
+  //     .catch(done);
+  // });
 
   it("query callback error with trace", function(done) {
     const conn = base.createCallbackConnection({ trace: true });
