@@ -58,6 +58,24 @@ describe("Pool", () => {
       .catch(done);
   });
 
+  it("double end", function(done) {
+    const pool = base.createPool({ connectionLimit: 1 });
+    pool.getConnection().then(conn => {
+      conn.end();
+      pool.end()
+      .then(() => {
+        pool.end()
+        .then(()=> {
+          done(new Error("must have thrown an error !"));
+        })
+        .catch(err => {
+          assert.isTrue(err.message.includes("pool is already closed"));
+          done();
+        });
+      });
+    });
+  });
+
   it("pool wrong query", function(done) {
     this.timeout(5000);
     const pool = base.createPool({ connectionLimit: 1 });
